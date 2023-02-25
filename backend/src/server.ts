@@ -32,8 +32,10 @@ server.use(express.urlencoded({ extended: true }));
 
 // register routes
 import EmployeeRouter from './api/routes/user';
+import ClaimRouter from "./api/routes/claim";
 
 server.use('/api/auth', EmployeeRouter);
+server.use('/api/claim', ClaimRouter);
 // error handler
 server.use(errorHandler);
 

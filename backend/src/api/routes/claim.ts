@@ -109,50 +109,56 @@ ClaimRouter.post('/', async (req, res, next) => {
 });
 
 ClaimRouter.put('/', async (req, res, next) => {
-  const { employeeid } = (req as CustomRequest).employee;
-  const {
-    claimid,
-    insuranceid,
-    expensedate,
-    amount,
-    purpose,
-    followup,
-    previousclaimid,
-  } = req.body;
+    const {employeeid} = (req as CustomRequest).employee;
+    const {
+        claimid, insuranceid,
+        expensedate, amount, purpose, followup,
+        previousclaimid
+    } = req.body
 
-  let isFound = false;
+    let isFound = false;
 
-  await getAllClaims(employeeid).then(async (claims) => {
-    for (let i = 0; i < claims.length; i++) {
-      if (claims[i].claimid === claimid) {
-        // Found the claim
-        isFound = true;
-        if (
-          insuranceid === claims[i].insuranceid &&
-          expensedate === claims[i].expensedate &&
-          amount === claims[i].amount &&
-          purpose === claims[i].purpose &&
-          previousclaimid === claims[i].previousclaimid &&
-          followup === claims[i].followup
-        ) {
-          // Parameters have no change from database entry, do not update last edited
-          console.log('No change needed');
-          res.status(200).json({
-            policies: [],
-          });
-        } else {
-          console.log('Change needed');
-          insuranceid && (claims[i].insuranceid = insuranceid);
-          expensedate && (claims[i].expensedate = expensedate);
-          amount && (claims[i].amount = amount);
-          purpose && (claims[i].purpose = purpose);
-          previousclaimid && (claims[i].previousclaimid = previousclaimid);
-          followup && (claims[i].followup = followup);
-          claims[i].lasteditedclaimdate = new Date().toISOString();
-          await claims[i].save();
-          await getAllClaims(employeeid).then((r) => {
-            res.status(200).json({
-              claims: r,
+    await getAllClaims(employeeid).then(async (claims) => {
+        for (let i = 0; i < claims.length; i++) {
+            if (claims[i].claimid === claimid) {
+                // Found the claim
+                isFound = true;
+                if (insuranceid === claims[i].insuranceid
+                    && expensedate === claims[i].expensedate
+                    && amount === claims[i].amount
+                    && purpose === claims[i].purpose
+                    && previousclaimid === claims[i].previousclaimid
+                    && followup === claims[i].followup) {
+                    // Parameters have no change from database entry, do not update last edited
+                    console.log("No change needed");
+                } else {
+                    console.log("Change needed");
+                    insuranceid && (claims[i].insuranceid = insuranceid);
+                    expensedate && (claims[i].expensedate = expensedate);
+                    amount && (claims[i].amount = amount);
+                    purpose && (claims[i].purpose = purpose);
+                    previousclaimid && (claims[i].previousclaimid = previousclaimid);
+                    followup && (claims[i].followup = followup);
+                    claims[i].lasteditedclaimdate = new Date().toISOString();
+                    await claims[i].save();
+                    await getAllClaims(employeeid).then((r) => {
+                        res.status(200).json({
+                            claims: r
+                        })
+                    });
+                }
+                await getAllClaims(employeeid).then((r) => {
+                    res.status(200).json({
+                        claims: r
+                    })
+                });
+                break;
+            }
+        }
+
+        if (!isFound) {
+            res.status(400).json({
+                "message": "Invalid claim id given"
             });
           });
         }

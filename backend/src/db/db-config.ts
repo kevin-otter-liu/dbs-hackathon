@@ -19,6 +19,9 @@ const getDbConnection = () => {
       dialect: 'postgres',
       port: parseInt(process.env.DB_PORT!),
       quoteIdentifiers: false,
+      define: {
+        timestamps: false
+      }
     }
   );
 };

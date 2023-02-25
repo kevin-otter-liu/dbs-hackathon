@@ -54,7 +54,7 @@ import Employee from './User';
         type: DataTypes.FLOAT,
       },
     },
-    { sequelize: getDbConnection(), modelName: 'insurancepolicies' }
+    { sequelize: getDbConnection(), modelName: 'insurancepolicies', timestamps: false }
   );
   
   export default InsurancePolicy;

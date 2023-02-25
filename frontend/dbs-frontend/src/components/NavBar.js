@@ -13,14 +13,13 @@ const NavBar = () => {
                         <span class="navbar-text">
                             Welcome, John Doe
                         </span>
-
-                        <li className="nav-item">
+                        <li className="nav-item align-self-end">
                             <Link to='/' className="nav-link">View All</Link>
-                        </li>
-                        <li className="nav-item">
+        
                             <button class="btn btn-outline-primary">Log out</button>
                         </li>
 
+                        
                     </ul>
                 </div>
             </div>

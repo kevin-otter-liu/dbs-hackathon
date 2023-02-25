@@ -1,12 +1,38 @@
 import { useState, useEffect } from "react";
 import React from "react"
 import { useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from 'react-redux'
+import api from "../api/api";
+import { login } from "../redux/authSlice";
 
 const LoginPage = () => {
     const [employeeId, setemployeeId] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [currentUser, setCurrentUser] = useState("");
+
+    const logEmployee = async () => {
+        try {
+            const employeeCred = {
+                employeeid: employeeId,
+                password: password
+            }
+            const response = await api.post('/api/auth/sign-in', employeeCred);
+            if (response && response.data) { 
+                setCurrentUser(response.data.access_token);
+                dispatch(login(response.data.access_token));
+                console.log(response.data.access_token)
+            };
+        } catch (err) {
+            if (err.response) {
+                //not in 200 response range
+                console.log(err.response.data);
+                console.log(err.response.status);
+                console.log(err.response.headers);
+            }
+        }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -15,6 +41,8 @@ const LoginPage = () => {
         }
         //console.log(employeeId);
         //console.log(password);
+        //api
+        logEmployee(); 
         setemployeeId('');
         setPassword('');
         navigate('/');
@@ -22,7 +50,7 @@ const LoginPage = () => {
 
     return (
         <div className="container">
-    
+
             <div className="row mt-4">
                 <div className="col-3"></div>
                 <div className="col-6">

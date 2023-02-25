@@ -203,7 +203,6 @@ ClaimRouter.delete('/', async (req, res, next) => {
       .catch((error) => {
         console.error('Failed to retrieve data : ', error);
       });
-  });
 });
 
 export default ClaimRouter;

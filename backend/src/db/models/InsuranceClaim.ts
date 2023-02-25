@@ -8,13 +8,14 @@ import {
   } from 'sequelize';
 
 import getDbConnection from '../db-config';
+import InsurancePolicy from './InsurancePolicy';
 
-class Claim extends Model<
-  InferAttributes<Claim>,
-  InferCreationAttributes<Claim>
+class InsuranceClaim extends Model<
+  InferAttributes<InsuranceClaim>,
+  InferCreationAttributes<InsuranceClaim>
 > {
     declare claimid: number;
-    declare insuranceid: number; // add foreign key ForeignKey<InsurancePolicy["insuranceid"]>
+    declare insuranceid: ForeignKey<InsurancePolicy['insuranceid']>;
     declare firstname: string;
     declare lastname: string;
     declare expensedate: string;
@@ -26,7 +27,7 @@ class Claim extends Model<
     declare lasteditedclaimdate: string;
 }
 
-Claim.init(
+InsuranceClaim.init(
     {
         claimid: {
             type: DataTypes.INTEGER,
@@ -69,4 +70,6 @@ Claim.init(
         modelName: 'insuranceclaims',
         timestamps: false,
     }
-)
+);
+
+export default InsuranceClaim;

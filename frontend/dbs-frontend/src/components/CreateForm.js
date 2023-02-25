@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "./api/api";
 
 function CreateForm() {
   const [data, setData] = useState({});
@@ -8,11 +8,9 @@ function CreateForm() {
     await e.preventDefault();
     try {
       console.log(data);
-      const postNewClaim = await axios.post(
+      const postNewClaim = await api.post(
         "http://localhost:4500/InsuranceClaims",
-        {
-          ExpenseDate: data,
-        }
+        data
       );
       console.log(postNewClaim);
     } catch (err) {
@@ -59,22 +57,18 @@ function CreateForm() {
               <label htmlFor="isFollowUp">Is this a follow-up claim?</label>
               <input
                 type="radio"
-                id="isFollowUp"
+                id="isFollowUpYes"
                 className="form-check-input col-4"
-                name="isFollowUpYes"
-              ></input>
-              <label class="form-check-label" for="isFollowUpYes">
-                Yes
-              </label>
+                name="isFollowUp"
+              />
+              <label htmlFor="isFollowUpYes">Yes</label>
               <input
                 type="radio"
-                id="isFollowUp"
+                id="isFollowUpNo"
                 className="form-check-input col-4"
-                name="isFollowUpNo"
-              ></input>
-              <label class="form-check-label" for="isFollowUpNo">
-                No
-              </label>
+                name="isFollowUp"
+              />
+              <label htmlFor="isFollowUpNo">No</label>
               {/* <label htmlFor="isFollowUp">Is this a follow up claim?</label>
               <input
                 className="form-control col-4"
@@ -97,6 +91,14 @@ function CreateForm() {
                 }
               />
             </div>
+            <div>
+              <label htmlFor="prevclaimidpop">Choose previouss claim ID</label>
+              <select>
+                <option value="1">2010</option>
+                <option value="1">2011</option>
+                <option value="1">2012</option>
+              </select>
+            </div>
           </div>
 
           <button type="submit" className="btn btn-primary">
@@ -108,14 +110,3 @@ function CreateForm() {
   );
 }
 export default CreateForm;
-
-{
-  /* <div className="row">
-                <div className = "col-6">
-                    <label htmlFor="isFollowUp">is this a follow-up claim?</label>
-                    <input type="radio" id="isFollowUp" className="form-check-input col-4" name="isFollowUpYes" readOnly></input>
-                    <label class='form-check-label' for="isFollowUpYes">Yes</label>
-                    <input type="radio" id="isFollowUp" className="form-check-input col-4" name="isFollowUpNo" readOnly></input>
-                    <label class='form-check-label' for="isFollowUpNo">No</label>
-                </div> */
-}

@@ -1,11 +1,11 @@
 import React from 'react'
 import EditForm from '../components/EditForm'
-// import NavBar from '../components/NavBar'
+import NavBar from '../components/NavBar'
 
 const EditPage = () => {
   return (
     <div>
-        {/* <NavBar></NavBar> */}
+        <NavBar></NavBar>
         <EditForm></EditForm>
     </div>
   )

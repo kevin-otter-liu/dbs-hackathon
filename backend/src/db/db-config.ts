@@ -9,7 +9,6 @@ const getDbConnection = () => {
   }
   console.log('creating new dbConn');
 
-  console.log(`her here ${process.env.DB_PORT}`);
   console.log(process.env.DB_PASSWORD);
   return new Sequelize(
     process.env.DB_NAME!,

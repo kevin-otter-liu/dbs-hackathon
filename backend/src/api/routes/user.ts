@@ -4,6 +4,7 @@ import { HttpError } from '../../libs/http-error';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
+import { checkAuth } from '../middleware/check-auth';
 // import { checkAuth } from '../middleware/check-auth';
 
 const EmployeeRouter = Router();
@@ -55,21 +56,21 @@ EmployeeRouter.post('/sign-in', async (req, res, next) => {
   const { employeeid, password } = req.body;
 
   // check user not in database
-  const user = await EmployeeModel.findOne({
+  const employee = await EmployeeModel.findOne({
     where: { employeeid: employeeid, password: password },
   });
-  console.log(user);
+  console.log(employee);
 
-  if (!user) {
-    return next(new HttpError(423, 'username does not exist'));
+  if (!employee) {
+    return next(new HttpError(400, 'incorrect_credentials'));
   }
 
   // compare password
-  let authenticated = bcrypt.compare(password, user.password);
+  // let authenticated = bcrypt.compare(password, user.password);
 
-  if (!authenticated) {
-    return next(new HttpError(423, 'wrong password'));
-  }
+  // if (!authenticated) {
+  //   return next(new HttpError(423, 'wrong password'));
+  // }
 
   // creat JWT token for user
   let currentDate = new Date();
@@ -77,7 +78,7 @@ EmployeeRouter.post('/sign-in', async (req, res, next) => {
   const serverSecret = process.env.SERVER_SECRET!;
   const access_token = jwt.sign(
     {
-      user_id: user.dataValues.employeeid,
+      employeeid: employee.dataValues.employeeid,
     },
     serverSecret,
     {
@@ -93,9 +94,9 @@ EmployeeRouter.post('/sign-in', async (req, res, next) => {
   return next();
 });
 
-// userRouter.get('/check-auth', checkAuth, (req, res, next) => {
-//   res.status(200).send();
-//   next();
-// });
+EmployeeRouter.get('/check-auth', checkAuth, (req, res, next) => {
+  res.status(200).send();
+  next();
+});
 
 export default EmployeeRouter;

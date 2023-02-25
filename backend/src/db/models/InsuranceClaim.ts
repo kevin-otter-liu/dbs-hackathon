@@ -21,7 +21,7 @@ class InsuranceClaim extends Model<
     declare expensedate: string;
     declare amount: number;
     declare purpose: string;
-    declare followup: boolean; // remember to convert bit to boolean when pulling from db
+    declare followup: number; // remember to convert bit to boolean when pulling from db
     declare previousclaimid: number;
     declare status: string;
     declare lasteditedclaimdate: string;
@@ -54,7 +54,7 @@ InsuranceClaim.init(
             type: DataTypes.STRING,
         },
         followup: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.NUMBER,
         },
         previousclaimid: {
             type: DataTypes.INTEGER,

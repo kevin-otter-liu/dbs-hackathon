@@ -42,7 +42,12 @@ Employee.init(
       type: DataTypes.INTEGER,
     },
   },
-  { sequelize: getDbConnection(), modelName: 'employee' }
+  {
+    sequelize: getDbConnection(),
+    modelName: 'employee',
+    timestamps: false,
+    freezeTableName: true,
+  }
 );
 
 export default Employee;

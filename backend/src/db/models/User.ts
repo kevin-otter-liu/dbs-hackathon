@@ -11,7 +11,10 @@ import getDbConnection from '../db-config';
 // import Token from './Token';
 
 // defining Models: attributes at creation and attributes output from DB
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+class Employee extends Model<
+  InferAttributes<Employee>,
+  InferCreationAttributes<Employee>
+> {
   declare employeeid: string;
   declare password: string;
   declare firstname: string;
@@ -19,8 +22,13 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare age: number;
 }
 
-User.init(
+Employee.init(
   {
+    employeeid: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+    },
     password: {
       type: DataTypes.STRING,
     },
@@ -33,13 +41,8 @@ User.init(
     age: {
       type: DataTypes.INTEGER,
     },
-    employeeid: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      allowNull: false,
-    },
   },
-  { sequelize: getDbConnection(), modelName: 'user' }
+  { sequelize: getDbConnection(), modelName: 'employee' }
 );
 
-export default User;
+export default Employee;

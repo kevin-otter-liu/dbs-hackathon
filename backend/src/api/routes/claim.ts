@@ -123,7 +123,7 @@ ClaimRouter.put('/', async (req, res, next) => {
 ClaimRouter.delete('/', async (req, res, next) => {
     // Returns the list of claim records the employee has
     const claimId = req.query.claimId as string;
-
+    const {employeeid} = (req as CustomRequest).employee;
 
     // Check accessToken validity
     // If accessToken is not valid, return 400 INVALID USER
@@ -137,9 +137,12 @@ ClaimRouter.delete('/', async (req, res, next) => {
             where: {
                 claimid: parseInt(claimId),
             }
-        }).then(r => {
-            res.status(200).json({
-            })
+        }).then(async r => {
+            await getAllClaims(employeeid).then((r) => {
+                res.status(200).json({
+                    claims: r
+                })
+            });
         }).catch((error) => {
             console.error('Failed to retrieve data : ', error);
         });

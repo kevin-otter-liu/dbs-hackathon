@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import EditPage from './pages/EditPage';
 import React from "react";
 import CreateFromPage from "./pages/CreateFromPage";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
       <div className="container">
         <Routes>
           <Route path='/' element={<LoginPage />} />
-          <Route path='/Edit' element={<EditPage />} />
+          <Route path='/edit' element={<EditPage />} />
           <Route path="/create" element={<CreateFromPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </div>
     </Router>

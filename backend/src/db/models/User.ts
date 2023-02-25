@@ -28,6 +28,7 @@ Employee.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
+      autoIncrement: true,
     },
     password: {
       type: DataTypes.STRING,

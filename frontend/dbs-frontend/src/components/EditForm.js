@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // const axios = require('axios');
 import axios from 'axios';
 
@@ -20,6 +20,32 @@ const EditForm = () => {
     // console.log(res)
     
     // console.log(claim.FirstName)
+
+    const [claimID, setClaimID] = useState("")
+    const [expDate, setExpdate] = useState("")
+    const [amt, setAmt] = useState("")
+    const [isFollowUp, setIsFollowUp] = useState(false)
+    const [prevClaimId, setPrevClaimId] = useState("")
+    const [status, setStatus] = useState("")
+    const [purpose, setPurpose] = useState("")
+    const [lastEdited, setLastEdited] = useState("")
+    const [claimInfo, setClaimInfo] = useState({})
+
+    const fetchClaim = async () => {
+        try {
+          const getClaim = await api.get("localhost:4000");
+          // console.log(getexchrt.data);
+          setClaimInfo(getClaim.data);
+        } catch (err) {
+          if (err.getexchrt) {
+            console.log(err.getClaim.data);
+            console.log(err.getClaim.status);
+            console.log(err.getClaim.headers);
+          } else {
+            console.log(`Error: ${err.message}`);
+          }
+        }
+    }
 
 
     return (

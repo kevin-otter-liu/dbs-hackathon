@@ -33,6 +33,7 @@ InsuranceClaim.init(
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
+            autoIncrement: true,
         },
         insuranceid: {
             type: DataTypes.INTEGER,

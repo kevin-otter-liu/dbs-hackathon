@@ -34,6 +34,7 @@ import Employee from './User';
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
       },
       insurancetype: {
         type: DataTypes.STRING,
@@ -54,7 +55,11 @@ import Employee from './User';
         type: DataTypes.FLOAT,
       },
     },
-    { sequelize: getDbConnection(), modelName: 'insurancepolicies', timestamps: false }
+    { 
+      sequelize: getDbConnection(), 
+      modelName: 'insurancepolicies',
+      timestamps: false,
+    }
   );
   
   export default InsurancePolicy;

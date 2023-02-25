@@ -106,3 +106,4 @@ dist
 backend/env/postgres.env
 
 *.env
+backend/env/server.env

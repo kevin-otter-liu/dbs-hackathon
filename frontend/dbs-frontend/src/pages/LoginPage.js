@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const LoginPage = () => {
     const [employeeId, setemployeeId] = useState("");
     const [password, setPassword] = useState("");
@@ -8,6 +9,9 @@ const LoginPage = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        if (employeeId.trim() == "" || password.trim() == "") {
+            alert("Please fill in all fields");
+        }
         //console.log(employeeId);
         //console.log(password);
         setemployeeId('');
@@ -17,6 +21,7 @@ const LoginPage = () => {
 
     return (
         <div className="container">
+    
             <div className="row mt-4">
                 <div className="col-3"></div>
                 <div className="col-6">

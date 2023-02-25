@@ -7,7 +7,7 @@ import {
     ForeignKey,
   } from 'sequelize';
   
-  import getDbConnection from '../db-config';
+import getDbConnection from '../db-config';
 import Employee from './User';
   
   // import Token from './Token';
@@ -54,7 +54,7 @@ import Employee from './User';
         type: DataTypes.FLOAT,
       },
     },
-    { sequelize: getDbConnection(), modelName: 'insurancepolicy' }
+    { sequelize: getDbConnection(), modelName: 'insurancepolicies' }
   );
   
   export default InsurancePolicy;

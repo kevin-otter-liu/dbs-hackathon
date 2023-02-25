@@ -87,9 +87,6 @@ ClaimRouter.put('/', async (req, res, next) => {
                     && followup === claims[i].followup) {
                     // Parameters have no change from database entry, do not update last edited
                     console.log("No change needed");
-                    res.status(200).json({
-                        policies: []
-                    });
                 } else {
                     console.log("Change needed");
                     insuranceid && (claims[i].insuranceid = insuranceid);
@@ -106,6 +103,11 @@ ClaimRouter.put('/', async (req, res, next) => {
                         })
                     });
                 }
+                await getAllClaims(employeeid).then((r) => {
+                    res.status(200).json({
+                        claims: r
+                    })
+                });
                 break;
             }
         }

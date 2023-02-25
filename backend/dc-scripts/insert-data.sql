@@ -14,6 +14,12 @@ CREATE TABLE InsuranceClaims (
   LastEditedClaimDate varchar(255) NOT NULL
 );
 
+INSERT INTO Employee VALUES (58001001,'iLoveTT!23','Irene','Lim',27);
+INSERT INTO Employee VALUES (58001002,'DBSB#stB4nk','Mary','Lee',35);
+INSERT INTO Employee VALUES (58001003,'JoinSEED20@3','John','Tan',38);
+INSERT INTO Employee VALUES (58001004,'LiveM0reb$nk1ess','Martin','Ong',43);
+INSERT INTO Employee VALUES (58001005,'J4vaPyth0nSq!','Sean','Chia',52);
+
 INSERT INTO InsurancePolicies VALUES (1005,58001002,'Personal Accident','2022-03-31T00:00:00+08:00','12 months','2023-03-31T00:00:00+08:00',1000,400),
 (1006,58001002,'Housing','2022-03-31T00:00:00+08:00','24 months','2024-03-31T00:00:00+08:00',50000,50000),
 (1007,58001002,'Car','2022-03-31T00:00:00+08:00','24 months','2024-03-31T00:00:00+08:00',25000,20000),

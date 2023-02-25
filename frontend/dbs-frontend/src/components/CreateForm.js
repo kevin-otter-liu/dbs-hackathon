@@ -1,47 +1,112 @@
-import React from 'react'
+import React, { useState } from "react";
+import api from "./api/api";
 
-const CreateForm = () => {
+function CreateForm() {
+  const [data, setData] = useState({});
+
+  const submitNewClaim = async (e) => {
+    await e.preventDefault();
+    try {
+      console.log(data);
+      const postNewClaim = await api.post(
+        "http://localhost:4500/InsuranceClaims",
+        data
+      );
+      console.log(postNewClaim);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
+    <div>
+      <form onSubmit={submitNewClaim}>
+        <div>
+          <h3>Create new policy claim</h3>
+          <div>
+            <div className="col-6">
+              <label htmlFor="expDate">Expense Date</label>
+              <input
+                className="form-control col-4"
+                type="text"
+                id="expDate"
+                name="expDate"
+                onChange={(e) => setData({ ...data, expDate: e.target.value })}
+              />
+            </div>
+            <div className="col-6">
+              <label htmlFor="amount">Amount</label>
+              <input
+                className="form-control col-4"
+                type="amount"
+                id="amount"
+                name="amount"
+                onChange={(e) => setData({ ...data, amount: e.target.value })}
+              />
+            </div>
+            <div className="col-6">
+              <label htmlFor="purpose">Purpose</label>
+              <input
+                className="form-control col-4"
+                type="text"
+                id="purpose"
+                onChange={(e) => setData({ ...data, purpose: e.target.value })}
+              ></input>
+            </div>
+            <div className="col-6">
+              <label htmlFor="isFollowUp">Is this a follow-up claim?</label>
+              <input
+                type="radio"
+                id="isFollowUpYes"
+                className="form-check-input col-4"
+                name="isFollowUp"
+              />
+              <label htmlFor="isFollowUpYes">Yes</label>
+              <input
+                type="radio"
+                id="isFollowUpNo"
+                className="form-check-input col-4"
+                name="isFollowUp"
+              />
+              <label htmlFor="isFollowUpNo">No</label>
+              {/* <label htmlFor="isFollowUp">Is this a follow up claim?</label>
+              <input
+                className="form-control col-4"
+                type="radio"
+                id="isFollowUpYes"
+                onChange={(e) =>
+                  setData({ ...data, isFollowUp: e.target.value })
+                }
+              ></input> */}
+            </div>
+            <div className="col-6">
+              <label htmlFor="prevclaimid">Previous Claim ID</label>
+              <input
+                className="form-control col-4"
+                type="text"
+                id="prevclaimid"
+                name="prevclaimid"
+                onChange={(e) =>
+                  setData({ ...data, prevclaimid: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label htmlFor="prevclaimidpop">Choose previouss claim ID</label>
+              <select>
+                <option value="1">2010</option>
+                <option value="1">2011</option>
+                <option value="1">2012</option>
+              </select>
+            </div>
+          </div>
 
-    <div className="container">
-        <div className="row">
-            <button type="button" class="btn btn-link">Edit</button>
-            <button type="button" class="btn btn-link">Delete</button>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
         </div>
-        <div className="col edit-col">
-            <div className = "row">
-                <label htmlFor="claimid">Claim Id</label>
-                <input type="text" id="claimid"></input>
-            </div>
-            <div className = "row">
-                <label htmlFor="date">Date</label>
-                <input type="text" id="date"></input>
-            </div>
-            <div className = "row">
-                <label htmlFor="amount">Amount</label>
-                <input type="text" id="amount"></input>
-            </div>
-            <div className = "row">
-                <label htmlFor="prevclaimid">Previous Claim Id</label>
-                <input type="text" id="prevclaimid"></input>
-            </div>
-        </div>
-        <div className="col edit-col">
-            <div className = "row">
-                <label htmlFor="status">Status</label>
-                <input type="text" id="status"></input>
-            </div>
-            <div className = "row">
-                <label htmlFor="purpose">Purpose</label>
-                <input type="text" id="purpose"></input>
-            </div>
-            <div className = "row">
-                <label htmlFor="lud">Last Edited Date</label>
-                <input type="text" id="lud"></input>
-            </div>
-        </div>
+      </form>
     </div>
-  )
+  );
 }
-
-export default CreateForm
+export default CreateForm;

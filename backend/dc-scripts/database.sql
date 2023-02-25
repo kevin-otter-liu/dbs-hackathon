@@ -23,8 +23,8 @@ CREATE TABLE InsurancePolicies (
 
 DROP TABLE IF EXISTS InsuranceClaims;
 CREATE TABLE InsuranceClaims (
-  ClaimID int PRIMARY KEY NOT NULL REFERENCES InsurancePolicies(InsuranceId) ON DELETE CASCADE ON UPDATE CASCADE,
-  InsuranceID int NOT NULL,
+  ClaimID int PRIMARY KEY NOT NULL,
+  InsuranceID int NOT NULL REFERENCES InsurancePolicies(InsuranceId) ON DELETE CASCADE ON UPDATE CASCADE,
   FirstName varchar(50) NOT NULL,
   LastName varchar(50) NOT NULL,
   ExpenseDate varchar(255) NOT NULL,

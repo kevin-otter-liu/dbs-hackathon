@@ -1,65 +1,64 @@
 import { Router } from 'express';
-import UserModel from '../../db/models/User';
+import EmployeeModel from '../../db/models/User';
 import { HttpError } from '../../libs/http-error';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 // import { checkAuth } from '../middleware/check-auth';
 
-const userRouter = Router();
+const EmployeeRouter = Router();
 
-userRouter.post('/sign-up', async (req, res, next) => {
-  const { username, password, privilege } = req.body;
+// userRouter.post('/sign-up', async (req, res, next) => {
+//   const { employeeid, password } = req.body;
 
-  // check user not in database
-  const foundUser = await UserModel.findOne({
-    where: { username: username },
-  });
+//   // check user not in database
+//   const foundUser = await UserModel.findOne({
+//     where: { employeeid: employeeid },
+//   });
 
-  if (foundUser) {
-    return next(new HttpError(423, 'username already exists'));
-  }
+//   if (foundUser) {
+//     return next(new HttpError(423, 'username already exists'));
+//   }
 
-  // encrypt password salt + hashing
-  const serverSecret = process.env.SERVER_SECRET!;
-  const hashedPassword = await bcrypt.hash(password, 12);
+//   // encrypt password salt + hashing
+//   const serverSecret = process.env.SERVER_SECRET!;
+//   const hashedPassword = await bcrypt.hash(password, 12);
 
-  const user = await UserModel.create({
-    id: uuidv4(),
-    username: username,
-    password: hashedPassword,
-    privilege: privilege || 'basic',
-  });
+//   // const user = await UserModel.create({
+//   //   employeeid: employeeid,
+//   //   password: hashedPassword,
+//   // });
 
-  // creat JWT token for user
+//   // creat JWT token for user
 
-  let currentDate = new Date();
-  let expireDate = new Date(currentDate.getTime() + 60 * 60 * 1000);
-  const access_token = jwt.sign(
-    {
-      user_id: user.dataValues.id,
-    },
-    serverSecret,
-    {
-      expiresIn: '1hr',
-    }
-  );
+//   let currentDate = new Date();
+//   let expireDate = new Date(currentDate.getTime() + 60 * 60 * 1000);
+//   const access_token = jwt.sign(
+//     {
+//       user_id: user.dataValues.id,
+//     },
+//     serverSecret,
+//     {
+//       expiresIn: '1hr',
+//     }
+//   );
 
-  res.status(200).json({
-    access_token: access_token,
-    expires_at: expireDate,
-    privilege: user.privilege,
-  });
-  return next();
-});
+//   res.status(200).json({
+//     access_token: access_token,
+//     expires_at: expireDate,
+//     privilege: user.privilege,
+//   });
+//   return next();
+// });
 
-userRouter.post('/sign-in', async (req, res, next) => {
-  const { username, password } = req.body;
+EmployeeRouter.post('/sign-in', async (req, res, next) => {
+  const { employeeid, password } = req.body;
 
   // check user not in database
-  const user = await UserModel.findOne({
-    where: { username: username },
+  const user = await EmployeeModel.findOne({
+    where: { employeeid: employeeid, password: password },
   });
+  console.log(user);
 
   if (!user) {
     return next(new HttpError(423, 'username does not exist'));
@@ -74,15 +73,15 @@ userRouter.post('/sign-in', async (req, res, next) => {
 
   // creat JWT token for user
   let currentDate = new Date();
-  let expireDate = new Date(currentDate.getTime() + 60 * 60 * 1000);
+  let expireDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
   const serverSecret = process.env.SERVER_SECRET!;
   const access_token = jwt.sign(
     {
-      user_id: user.dataValues.id,
+      user_id: user.dataValues.employeeid,
     },
     serverSecret,
     {
-      expiresIn: '1hr',
+      expiresIn: '24hr',
     }
   );
 
@@ -99,4 +98,4 @@ userRouter.post('/sign-in', async (req, res, next) => {
 //   next();
 // });
 
-export default userRouter;
+export default EmployeeRouter;

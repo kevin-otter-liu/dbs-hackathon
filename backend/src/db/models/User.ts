@@ -15,7 +15,7 @@ class Employee extends Model<
   InferAttributes<Employee>,
   InferCreationAttributes<Employee>
 > {
-  declare employeeid: string;
+  declare employeeid: number;
   declare password: string;
   declare firstname: string;
   declare lastname: string;

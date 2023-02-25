@@ -30,6 +30,10 @@ server.use(express.json());
 // allow query strings to be parse in URL with the qs lib
 server.use(express.urlencoded({ extended: true }));
 
+// register routes
+import EmployeeRouter from './api/routes/user';
+
+server.use('/api/auth', EmployeeRouter);
 // error handler
 server.use(errorHandler);
 
